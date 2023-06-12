@@ -8,27 +8,26 @@ const caesarModule = (function () {
 const letters ="abcdefghijklmnopqrstuvwxyz";
 
   function caesar(input, shift, encode = true) {
- if (shift < -25 || shift >25||shift ===0||shift === undefined) return false;
- const adjustedShift = encode?shift : -shift;
+ if (shift < -25 || shift >25||shift ===0||shift === undefined) return false;//check for invalid input
+ const adjustedShift = encode?shift : -shift; //negate shift if we are encoding
  
  let result = "";
 for (let i=0; i<input.length;i++){
   const letter = input[i].toLowerCase();
   const letterIndex = letters.indexOf(letter);
+  //Index of return -1 if there's no match, so this will pass unrecognized characters through to result without changing it
   if(letterIndex ===-1){
     result +=letter;
-    continue;
+    continue; //runs the next iteration of the loop
   }
-  let shiftIndex = (letterIndex + adjustedShift + 26) % 26;
+  let shiftedIndex = (letterIndex + adjustedShift + 26) % 26;
   const shiftedLetter = letters[shiftedIndex];
-
+result += shiftedLetter;
 }
 return result;
   }
 
-  return {
-    caesar,
-  };
+  return { caesar };
 })();
 
 module.exports = { caesar: caesarModule.caesar };
